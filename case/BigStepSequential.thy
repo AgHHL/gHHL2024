@@ -1,5 +1,5 @@
 theory BigStepSequential
-  imports "../Analysis_More"
+  imports Analysis_More
 begin
 
 
