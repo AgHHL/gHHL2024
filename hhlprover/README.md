@@ -1,4 +1,4 @@
-# lics2024-case
+# gHHL2024
 ## simple intrudction of theories
 ### Analysis_more.thy
   * some results about derivatives   
