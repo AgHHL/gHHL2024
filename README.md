@@ -1,4 +1,4 @@
-# HHLprover
+# hhlprover
 ## usage
    1. Install Isabelle2023 from:<br>
         https://isabelle.in.tum.de/website-Isabelle2023/index.html  <br>
@@ -8,7 +8,7 @@
    3. Change logic session to "Ordinary_Differential_Equations" (change requires restart) <br>
    4. Open the ".thy" files in this package in Isabelle2023 <br>
 
-# HHLPar
+# hhlpar
 ## install
    1. Install Python 3.9 or higher:
    2. Install required packages:
