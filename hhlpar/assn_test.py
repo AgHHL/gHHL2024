@@ -128,39 +128,39 @@ class AssnTest(unittest.TestCase):
 
     def testSyncAssn(self):
         test_case = [
-            ("ch1?x;", {"chset":{"ch1"}}, "ch1!3;"),
-            ("ch1?x; ch2?y;", {"chset":{"ch1"}}, "ch1!3;"),
-            ("ch1?x; ch2!y;", {"chset":{"ch1"}}, "ch1!3;"),
-            ("ch1?x; ch2!x;", {"chset":{"ch1"}}, "ch1!3;"),
-            ("ch1!x; ch2?y;", {"chset":{"ch1", "ch2"}} , "ch1?z; ch2!(z+1);"),
-            ("y:=0;{ch1!x; y:=y+1;}*", {"chset":{"ch1"}}, "y:=0;{ch1?x; y:=y+x;}*"),
-            ("{ch1!x; y:=y+1;}*", {"chset":{"ch1"}, "init":"Ay==0&&By==0", "recinv":("AR1","BR1","By==Ay*Ax")}, "{ch1?x; y:=y+x;}*"),
-            ("{x_dot=1 & true} |> [] (ch1!x --> skip;)", {"chset":{"ch1"}}, "{x_dot=1 & true} |> [] (ch1?y --> skip;)"),
-            ("{x_dot=1 & true} |> [] (ch1!x --> skip;)", {"chset":{"ch1", "ch2"}}, "{x_dot=1 & true} |> [] (ch2?y --> skip;)"),
-            ("{x_dot=1 & true} |> [] (ch1!x --> skip;)", {"chset":{}}, "{x_dot=1 & true} |> [] (ch2?y --> skip;)"),
-            ("{x_dot=1 & x<8} |> [] (ch1!x --> skip;)", {"chset":{"ch1"}, "init":"Ax==0"}, "wait (5); ch1!1;"),
-            ("{x_dot=1 & x<8} |> [] (ch1!x --> skip;)", {"chset":{}, "init":"Ax==Bx"}, "{x_dot=1 & x<8} |> [] (ch2?y --> skip;)"),
-            ("{x_dot=1 & x<8} |> [] (ch1!x --> skip;)", {"chset":{"ch1", "ch2"}, "init":"Ax==Bx"}, "{x_dot=1 & x<8} |> [] (ch2?y --> skip;)"),
-            ("{x_dot=1 & x<8} |> [] (ch1!x --> skip;)", {"chset":{}}, "ch2?y;"),
-            ("{x_dot=1 & x<8} |> [] (ch1!x --> skip;)", {"chset":{"ch1", "ch2"}}, "ch2?y;"),
-            ("{x_dot=1 & x<8} |> [] (ch1!x --> skip;)", {"chset":{"ch1"}}, "ch1?y;"),
-            ("{x_dot=1 & x<8 +> ch1!x; } |> [] (ch1!x --> skip;)", {"chset":{"ch1"}, "init": "Ax==0"}, "wait (8); ch1?y;"),
-            ("ch2?y;", {"chset":{}}, "{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"),
-            ("ch2?y;", {"chset":{"ch1", "ch2"}}, "{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"),
-            ("ch1?y;", {"chset":{"ch1"}}, "{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"),
-            ("x:=1;", {"chset":{"ch1"}}, "skip;"),
-            ("{x_dot=1 , y_dot=2 & true} |> [] (ch1!x --> skip;)", {"chset":{"ch1"}}, "wait (1);ch1?x;"),
-            ("wait (5);", {"chset":{"ch1"}}, "wait (2); wait (3);"),
-            ("ch1?x;", {"chset":{"ch1"}}, "wait (y);ch1!3;"),
-            ("ch1!x;", {"chset":{"ch1"}}, "wait (y);ch1?x;"),
-            ("wait (y);ch1!x;", {"chset":{"ch1"}}, "ch1?x;"),
-            (("ch2?x; wait (1);ch1!x;", {"chset":{"ch1"}}, "ch1?x;"), {"chset":{"ch2"}},"ch2!v;wait (1);"),
-            ("x:=7;{x_dot=1 & x<6}", {"chset":{"ch1"}}, "skip;"),
-            ("{x_dot=1 & x<6}", {"chset":{"ch1"}, "init": "Ax==7"}, "skip;"),
-            ("{ x:=0; {ch1!2; {x_dot=1 & true} |> [] (ch2?y --> skip;)} ++ {ch1!1; {x_dot=2 & true} |> [] (ch2?y --> skip;)} } *", {"chset":{"ch1", "ch2"}}, "{ch1?y; wait (y); ch2!0;}*"),
-            ("{ x:=0; {ch1!2; {x_dot=1 & true} |> [] (ch2?y --> skip;)} ++ {ch1!1; {x_dot=2 & true} |> [] (ch2?y --> skip;)} } *", {"chset":{"ch1", "ch2"}, "init": "Ax==0", "recinv":("AR1","BR1","Ax>=0&&Ax<=2")}, "{ch1?y; wait (y); ch2!0;}*"),
-            (("{{x_dot=1 & true} |> [] (ch3?x --> ch1!0;,ch2?x --> skip;)}*",{"chset":{"ch1", "ch2"}},"{{x_dot=1 & true} |> [] (ch4?x --> ch2!0;,ch1?x --> skip;)}*"),{"chset":{"ch3", "ch4"}},"{wait (5);{ch3!0;} ++ {ch4!0;}}*"),
-            ("ch1!v;ch2!p; {ch3?a; {p_dot=v, v_dot=a & true} |> [] (ch1!v --> ch2!p;) }*", 
+            ({"pn":"A","P":"ch1?x;"}, {"chset":{"ch1"}}, {"pn":"B","P":"ch1!3;"}),
+            ({"pn":"A","P":"ch1?x; ch2?y;"}, {"chset":{"ch1"}}, {"pn":"B","P":"ch1!3;"}),
+            ({"pn":"A","P":"ch1?x; ch2!y;"}, {"chset":{"ch1"}}, {"pn":"B","P":"ch1!3;"}),
+            ({"pn":"A","P":"ch1?x; ch2!x;"}, {"chset":{"ch1"}}, {"pn":"B","P":"ch1!3;"}),
+            ({"pn":"A","P":"ch1!x; ch2?y;"}, {"chset":{"ch1", "ch2"}} , {"pn":"B","P":"ch1?z; ch2!(z+1);"}),
+            ({"pn":"A","P":"y:=0;{ch1!x; y:=y+1;}*"}, {"chset":{"ch1"}}, {"pn":"B","P":"y:=0;{ch1?x; y:=y+x;}*"}),
+            ({"pn":"A","P":"{ch1!x; y:=y+1;}*"}, {"chset":{"ch1"}, "init":"Ay==0&&By==0", "recinv":("AR1","BR1","By==Ay*Ax")}, {"pn":"B","P":"{ch1?x; y:=y+x;}*"}),
+            ({"pn":"A","P":"{x_dot=1 & true} |> [] (ch1!x --> skip;)"}, {"chset":{"ch1"}}, {"pn":"B","P":"{x_dot=1 & true} |> [] (ch1?y --> skip;)"}),
+            ({"pn":"A","P":"{x_dot=1 & true} |> [] (ch1!x --> skip;)"}, {"chset":{"ch1", "ch2"}}, {"pn":"B","P":"{x_dot=1 & true} |> [] (ch2?y --> skip;)"}),
+            ({"pn":"A","P":"{x_dot=1 & true} |> [] (ch1!x --> skip;)"}, {"chset":{}}, {"pn":"B","P":"{x_dot=1 & true} |> [] (ch2?y --> skip;)"}),
+            ({"pn":"A","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}, {"chset":{"ch1"}, "init":"Ax==0"}, {"pn":"B","P":"wait (5); ch1!1;"}),
+            ({"pn":"A","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}, {"chset":{}, "init":"Ax==Bx"}, {"pn":"B","P":"{x_dot=1 & x<8} |> [] (ch2?y --> skip;)"}),
+            ({"pn":"A","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}, {"chset":{"ch1", "ch2"}, "init":"Ax==Bx"}, {"pn":"B","P":"{x_dot=1 & x<8} |> [] (ch2?y --> skip;)"}),
+            ({"pn":"A","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}, {"chset":{}}, {"pn":"B","P":"ch2?y;"}),
+            ({"pn":"A","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}, {"chset":{"ch1", "ch2"}}, {"pn":"B","P":"ch2?y;"}),
+            ({"pn":"A","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}, {"chset":{"ch1"}}, {"pn":"B","P":"ch1?y;"}),
+            ({"pn":"A","P":"{x_dot=1 & x<8 +> ch1!x; } |> [] (ch1!x --> skip;)"}, {"chset":{"ch1"}, "init": "Ax==0"}, {"pn":"B","P":"wait (8); ch1?y;"}),
+            ({"pn":"A","P":"ch2?y;"}, {"chset":{}}, {"pn":"B","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}),
+            ({"pn":"A","P":"ch2?y;"}, {"chset":{"ch1", "ch2"}}, {"pn":"B","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}),
+            ({"pn":"A","P":"ch1?y;"}, {"chset":{"ch1"}}, {"pn":"B","P":"{x_dot=1 & x<8} |> [] (ch1!x --> skip;)"}),
+            ({"pn":"A","P":"x:=1;"}, {"chset":{"ch1"}}, {"pn":"B","P":"skip;"}),
+            ({"pn":"A","P":"{x_dot=1 , y_dot=2 & true} |> [] (ch1!x --> skip;)"}, {"chset":{"ch1"}}, {"pn":"B","P":"wait (1);ch1?x;"}),
+            ({"pn":"A","P":"wait (5);"}, {"chset":{"ch1"}}, {"pn":"B","P":"wait (2); wait (3);"}),
+            ({"pn":"A","P":"ch1?x;"}, {"chset":{"ch1"}}, {"pn":"B","P":"wait (y);ch1!3;"}),
+            ({"pn":"A","P":"ch1!x;"}, {"chset":{"ch1"}}, {"pn":"B","P":"wait (y);ch1?x;"}),
+            ({"pn":"A","P":"wait (y);ch1!x;"}, {"chset":{"ch1"}}, {"pn":"B","P":"ch1?x;"}),
+            (({"pn":"A","P":"ch2?x; wait (1);ch1!x;"}, {"chset":{"ch1"}}, {"pn":"B","P":"ch1?x;"}), {"chset":{"ch2"}},{"pn":"C","P":"ch2!v;wait (1);"}),
+            ({"pn":"A","P":"x:=7;{x_dot=1 & x<6}"}, {"chset":{"ch1"}}, {"pn":"B","P":"skip;"}),
+            ({"pn":"A","P":"{x_dot=1 & x<6}"}, {"chset":{"ch1"}, "init": "Ax==7"}, {"pn":"B","P":"skip;"}),
+            ({"pn":"A","P":"{ x:=0; {ch1!2; {x_dot=1 & true} |> [] (ch2?y --> skip;)} ++ {ch1!1; {x_dot=2 & true} |> [] (ch2?y --> skip;)} } *"}, {"chset":{"ch1", "ch2"}}, {"pn":"B","P":"{ch1?y; wait (y); ch2!0;}*"}),
+            ({"pn":"A","P":"{ x:=0; {ch1!2; {x_dot=1 & true} |> [] (ch2?y --> skip;)} ++ {ch1!1; {x_dot=2 & true} |> [] (ch2?y --> skip;)} } *"}, {"chset":{"ch1", "ch2"}, "init": "Ax==0", "recinv":("AR1","BR1","Ax>=0&&Ax<=2")}, {"pn":"B","P":"{ch1?y; wait (y); ch2!0;}*"}),
+            (({"pn":"A","P":"{{x_dot=1 & true} |> [] (ch3?x --> ch1!0;,ch2?x --> skip;)}*"},{"chset":{"ch1", "ch2"}},{"pn":"B","P":"{{x_dot=1 & true} |> [] (ch4?x --> ch2!0;,ch1?x --> skip;)}*"}),{"chset":{"ch3", "ch4"}},{"pn":"C","P":"{wait (5);{ch3!0;} ++ {ch4!0;}}*"}),
+            ({"pn":"A","P":"ch1!v;ch2!p; {ch3?a; {p_dot=v, v_dot=a & true} |> [] (ch1!v --> ch2!p;) }*"}, 
              {"chset":{"ch1", "ch2", "ch3"}, 
               "init": """BT>0&&Bam>0&&Bda>0&&Bvm>0&&Ap<=Bop&&
                         ((((2*Bam)*(Bop-Ap)>=(Bvm^2))&&(Av<=Bvm))||
@@ -169,7 +169,7 @@ class AssnTest(unittest.TestCase):
                          ((((2*Bam)*(Bop-Ap)>=(Bvm^2))&&(Av<=Bvm))||
                          (((2*Bam)*(Bop-Ap)<(Bvm^2))&&(Av<=0||Av^2<=(2*Bam*(Bop-Ap)))))
                          &&Av==Bv&&Ap==Bp""")},
-             """ch1?v;ch2?p;
+             {"pn":"B","P":"""ch1?v;ch2?p;
              {pp:=p+v*T+(1/2)*da*T^2;vv:=v+da*T;
              if ((2*am)*(op-pp)>=(vm^2)) { vlm:=vm^2; } 
              else if (op-pp>0) { vlm:=(2*am*(op-pp)); } 
@@ -181,7 +181,7 @@ class AssnTest(unittest.TestCase):
                 else { vlm:=0; } 
                 if (v<=0||v^2<=vlm) {a:=0;} 
                 else {a:=-am;}} 
-            ch3!a;wait (T); ch1?v;ch2?p;}*""")
+            ch3!a;wait (T); ch1?v;ch2?p;}*"""})
         ]
         for s in test_case:
             print(sync_mult(s))
