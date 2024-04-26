@@ -2660,8 +2660,6 @@ def sync_mult(T: tuple) -> Assertion:
         # print(right)
         # init_txt = input("Enter an init: ")
         chset = T[1]["chset"]
-        init_txt = T[1].get("init","true")
-        init = expr_to_eexpr(parse_expr_with_meta(init_txt))
         if "recinv" in T[1]:
             rec_tup_inv.append(T[1]["recinv"])
         return sync(chset,left,right,init)
