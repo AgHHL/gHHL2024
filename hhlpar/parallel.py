@@ -2623,29 +2623,26 @@ def sync_mult(T: tuple) -> Assertion:
             raise NotImplementedError
         
 
-    pni = 0
-
-
     def sync_tuple(T: tuple) -> Assertion:
-        nonlocal pni
         assert isinstance(T,tuple) and len(T)==3
-        pnl = list(string.ascii_uppercase)
-
+        
         if isinstance(T[0],tuple):
             left = sync_tuple(T[0])
-        else:
-            hp = parse_hp_with_meta(T[0])
+        elif isinstance(T[0],dict):
+            hp = parse_hp_with_meta(T[0]["P"])
             hpa = seq_hcsp_to_assn(hp)
-            left = add_pn_assn(pnl[pni],hpa)
-            pni = pni+1
+            left = add_pn_assn(T[0]["pn"],hpa)
+        else:
+            raise NotImplementedError
 
         if isinstance(T[2],tuple):
             right = sync_tuple(T[2])
-        else:
-            hp = parse_hp_with_meta(T[2])
+        elif isinstance(T[2],dict):
+            hp = parse_hp_with_meta(T[2]["P"])
             hpa = seq_hcsp_to_assn(hp)
-            right = add_pn_assn(pnl[pni],hpa)
-            pni = pni+1
+            right = add_pn_assn(T[2]["pn"],hpa)
+        else:
+            raise NotImplementedError
         # print(left)
         # print(right)
         # init_txt = input("Enter an init: ")
