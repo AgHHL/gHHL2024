@@ -10,7 +10,7 @@ Users can add cases in the format of a tuple type (C1,D,C2) to verify c1||c2:
 * D is dict type:
   1. "chset": the set of communications in synchronization
   2. "init": the initial conditionn default to be True
-  3. "rec": the recursion condition default to be True
+  3. "recinv": the recursion condition default to be True
 * C1(or C2) is dict type if c1(or c2) is a sequential process:
   1. "pn": the parallel name usually use "A,B,C..."
   2. "P": the HCSP process c1(or c2) in text form
