@@ -1598,7 +1598,7 @@ def sync_mult(T: tuple) -> Assertion:
             if A1.ch_name in chset:
                 return Fassn
             else:
-                G = sync(chset, A1.param_assn.assn.substVar(A1.param_assn.bound_names[0],ConstExpr(0)), A2, cond)
+                G = sync(chset, A1.param_assn.assn.substVal(A1.param_assn.bound_names[0],ConstExpr(0)), A2, cond)
                 if G == Fassn:
                     return Fassn
                 else:
@@ -1611,7 +1611,7 @@ def sync_mult(T: tuple) -> Assertion:
             if A1.ch_name in chset:
                 return Fassn
             else:
-                G = sync(chset, A1.param_assn.assn.substVar(A1.param_assn.bound_names[0],ConstExpr(0)), A2, cond)
+                G = sync(chset, A1.param_assn.assn.substVal(A1.param_assn.bound_names[0],ConstExpr(0)), A2, cond)
                 if G == Fassn:
                     return Fassn
                 else:
@@ -1624,7 +1624,7 @@ def sync_mult(T: tuple) -> Assertion:
             if A2.ch_name in chset:
                 return Fassn
             else:
-                G = sync(chset, A1, A2.param_assn.assn.substVar(A2.param_assn.bound_names[0],ConstExpr(0)), cond)
+                G = sync(chset, A1, A2.param_assn.assn.substVal(A2.param_assn.bound_names[0],ConstExpr(0)), cond)
                 if G == Fassn:
                     return Fassn
                 else:
@@ -1637,7 +1637,7 @@ def sync_mult(T: tuple) -> Assertion:
             if A2.ch_name in chset:
                 return Fassn
             else:
-                G = sync(chset, A1, A2.param_assn.assn.substVar(A2.param_assn.bound_names[0],ConstExpr(0)), cond)
+                G = sync(chset, A1, A2.param_assn.assn.substVal(A2.param_assn.bound_names[0],ConstExpr(0)), cond)
                 if G == Fassn:
                     return Fassn
                 else:
@@ -2625,9 +2625,16 @@ def sync_mult(T: tuple) -> Assertion:
 
     def sync_tuple(T: tuple) -> Assertion:
         assert isinstance(T,tuple) and len(T)==3
-        
+        init_txt = T[1].get("init","true")
+        init = expr_to_eexpr(parse_expr_with_meta(init_txt))
         if isinstance(T[0],tuple):
-            left = sync_tuple(T[0])
+            init_txt1 = T[0][1].get("init","true")
+            init1 = expr_to_eexpr(parse_expr_with_meta(init_txt1))
+            if wl_prove(eexpr_to_expr(LogicExpr("->",init,init1))):
+                left = sync_tuple(T[0])
+            else:
+                print("wrong init")
+                raise NotImplementedError
         elif isinstance(T[0],dict):
             hp = parse_hp_with_meta(T[0]["P"])
             hpa = seq_hcsp_to_assn(hp)
@@ -2636,12 +2643,18 @@ def sync_mult(T: tuple) -> Assertion:
             raise NotImplementedError
 
         if isinstance(T[2],tuple):
-            right = sync_tuple(T[2])
+            init_txt2 = T[2][1].get("init","true")
+            init2 = expr_to_eexpr(parse_expr_with_meta(init_txt2))
+            if wl_prove(eexpr_to_expr(LogicExpr("->",init,init2))):
+                right = sync_tuple(T[2])
+            else:
+                raise NotImplementedError
         elif isinstance(T[2],dict):
             hp = parse_hp_with_meta(T[2]["P"])
             hpa = seq_hcsp_to_assn(hp)
             right = add_pn_assn(T[2]["pn"],hpa)
         else:
+            print("wrong init")
             raise NotImplementedError
         # print(left)
         # print(right)
