@@ -5,13 +5,13 @@ We can see the results of these cases by running:
 ```
 >>>python -m unittest hhlpar.assn_test.AssnTest.testSyncPostBoth
 ```
-## CCS Case Introduction
-line 311-333 represents the case of CCS
-* D is dict type:
-  1. "chset": the set of communications in synchronization
-  2. "init": the initial conditionn default to be True
-  3. "recinv": the recursion condition default to be True
-* C1(or C2) is dict type if c1(or c2) is a sequential process:
-  1. "pn": the parallel name usually use "A,B,C..."
-  2. "P": the HCSP process c1(or c2) in text form
-* C1(or C2) is tuple type (C11,D1,C12) if c1(or c2) is a parallel process c11||c12
+## Introduction of the case CCS 
+The dictionary in line 311-333 from 'assn_test.py' shows the case of CCS:
+* "PA" records the parallel process in the form of a triple:
+  1. The first part is the plant process: "pn" gives a name "A" and "P" records the sequential HCSP
+  2. The second part uses "chset" to record the set of communicating channels
+  3. The third part is the control process: "pn" gives a name "B" and "P" records the sequential HCSP
+* "Pre" records the condition on the initial state
+* "Post" records the condition on the end state to be proved
+* "Postr" records the condition on all the continuous intervals to be proved
+* "RI" records the loop invariant we provide
