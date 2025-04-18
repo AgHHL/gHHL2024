@@ -8,9 +8,9 @@ We can see the results of these cases by running:
 ## Introduction of the case CCS 
 The dictionary in line 311-333 from 'assn_test.py' shows the case of CCS:
 * "PA" records the parallel process in the form of a triple:
-  1. The first part is the plant process: "pn" gives a name "A" and "P" records the sequential HCSP
+  1. The first part is the plant process: "pn" gives a name "A" and "P" records the HCSP which contains a repetition of ODE interrupted by a communication, we use p_dot to denote derivate of p
   2. The second part uses "chset" to record the set of communicating channels
-  3. The third part is the control process: "pn" gives a name "B" and "P" records the sequential HCSP
+  3. The third part is the control process: "pn" gives a name "B" and "P" records the HCSP which contains a repetition of computing the acceleration
 * "Pre" records the condition on the initial state
 * "Post" records the condition on the end state to be proved
 * "Postr" records the condition on all the continuous intervals to be proved
