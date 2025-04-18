@@ -3764,7 +3764,7 @@ def sync_post_both(pre, assn: Assertion, posts, postt, rec_tup_list, odehps):
             inv.append(ii)
         exx = True
         for INV in INVL:
-            print(INV)
+            # print(INV)
             pINV = []
             for i in range(0,len(ODEL)):
                 if INV['eqs'] == ODEL[i].eqs:
