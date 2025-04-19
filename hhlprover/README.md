@@ -22,7 +22,7 @@
   * combination of traces
   * Inference rules for parallel between continuous assertions and discrete assertions
 
-### BigStepInterruptParallel1.thy and BigStepInterruptParallel2.thy and BigStepInterruptParallel3.thy
+### BigStepInterruptParallel1.thy, BigStepInterruptParallel2.thy and BigStepInterruptParallel3.thy
   * combination of traces
   * Inference rules for parallel between interrupt assertions
 
