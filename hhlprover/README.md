@@ -8,29 +8,32 @@
 ### BigStepSequential.thy
   * Big-step semantics 
   * Assertions for single process
-  * Hoare rules for discrete process
+  * Inference rules for discrete process
       
 ### BigStepContinuous.thy
-  * Hoare rules for ode and ode interrupt
+  * Inference rules for ode and ode interrupt
       
 ### BigStepParallel.thy
   * combination of traces
   * Assertions for parallel process
-  * Hoare rules for parallel without continuous assertions
+  * Inference rules for parallel without continuous assertions
       
 ### BigStepContParallel.thy
   * combination of traces
-  * Hoare rules for parallel between continuous assertions and discrete assertions
+  * Inference rules for parallel between continuous assertions and discrete assertions
 
-### BigStepInterryptParallel.thy
+### BigStepInterruptParallel1.thy and BigStepInterruptParallel2.thy and BigStepInterruptParallel3.thy
   * combination of traces
-  * Hoare rules for parallel between interrupt assertions
+  * Inference rules for parallel between interrupt assertions
 
 ### BigStepContinuousEx.thy and InterruptEx.thy
   * some simple examples
 
 ### BigstepRec.thy
   * assertions of rep hcsp in lfp form
+
+### BigstepProp.thy
+  * Inference rules from assertions to properties
 
 ### C.thy
   * proof the case CCS
