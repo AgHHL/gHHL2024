@@ -5,6 +5,9 @@ We can see the results of these cases by running:
 ```
 >>>python -m unittest hhlpar.assn_test.AssnTest.testSyncPostBoth
 ```
+## How to verify a HCSP process
+We use function sync_mult to generate the assertions of processes and use function sync_post_both to verify properties from assertions. A single process must be written in form of HCSP for example "{ y:=y+1;}*x:=y;". A parallel process should be written in a triple.  
+
 ## Introduction of the case CCS 
 The dictionary in line 311-333 from 'assn_test.py' shows the case of CCS:
 * "PA" records the parallel process in the form of a triple:
