@@ -26,7 +26,7 @@
   * combination of traces
   * Hoare rules for parallel between interrupt assertions
 
-### BigstepEx.thy and BigStepContinuousEx.thy and InterruptEx.thy
+### BigStepContinuousEx.thy and InterruptEx.thy
   * some simple examples
 
 ### BigstepRec.thy
